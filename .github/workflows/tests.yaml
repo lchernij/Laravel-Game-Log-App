@@ -32,6 +32,9 @@ jobs:
 
     env:
       APP_URL: "http://127.0.0.1:8000"
+      APP_LOCALE: pt_BR
+      APP_FALLBACK_LOCALE: pt_BR
+      APP_FAKER_LOCALE: pt_BR
       DB_CONNECTION: pgsql
       DB_HOST: localhost
       DB_PORT: 5432
