@@ -53,3 +53,35 @@ Caso apareça a mensagem `no code coverage driver available` verifique dois pont
 - Se foi instalado o xdebug
   - Pode ser instalado por exemplo `sudo apt install php-xdebug` ou segindo a versão do PHP instalado
 - Se foi adicionado a configuração `xdebug.mode=coverage` no arquivo `php.ini`
+
+### Dusk
+
+Para rodar os teste de frontend, serão necessários 2 processos rodando em separado com os seguintes comandos:
+
+- Processo para subir a aplicação:
+
+```shell
+  php artisan serve
+```
+
+- Processo para executar o Dusk
+
+```shell
+  php artisan dusk
+```
+
+Caso queira visualizar o Dusk executando os testes no navegador, execute o comando com o options `--browse`
+
+```shell
+  php artisan dusk --browse
+```
+
+#### Algumas soluções de erros que podem ocorrer
+
+Caso aconteça o erro SessionNotCreatedException, execute:
+
+```shell
+php artisan dusk:chrome-driver --detect
+```
+
+Garanta que a variável de ambiente `APP_URL` tenha o valor que você usa para acessar localmente, por exemplo: `http://127.0.0.1:8000`

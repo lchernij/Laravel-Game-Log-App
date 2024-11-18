@@ -1,6 +1,9 @@
 {
     "Access Controls": "Controle de acessos",
+    "Edit Role": "Editar função",
     "Get Started": "Principal",
+    "Import or create objects, or check back later for updates": "Importe ou crie registros, ou verifique novamente mais tarde para atualizações.",
+    "Modify the privileges and permissions associated with a specific role.": "Modifique os privilégios e permissões associados a uma função específica.",
     "The details you entered did not match our records. Please double-check and try again.": "Os dados que você inseriu não correspondem aos nossos registros. Verifique e tente novamente.",
     "There are no objects currently displayed": "Nenhum registro encontrado"
 }
