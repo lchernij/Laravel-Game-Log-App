@@ -4,15 +4,19 @@ namespace Tests\Browser\Tests;
 
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {
     use DatabaseTruncation;
-    
-    public function testOpenFormAndValidateFields(): void
+
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
+    public function testLogin(): void
     {
         $this->browse(function (Browser $browser) {
+            # Form inputs
             $browser->visit('/admin/login')
                 ->assertSee('Game Log App Test')
                 ->assertSee('Entre na sua conta')
@@ -24,19 +28,16 @@ class LoginTest extends DuskTestCase
                 ->assertSee('Entrar')
             ;
 
+            # Login with invalid data
             $browser->type('email', '1@1.com')
                 ->type('password', '1@1.com')
                 ->press('Entrar')
                 ->waitFor('.form-control.is-invalid')
             ;
-        });
-    }
 
-    public function testUserCanLoginWithSuccess(): void
-    {
-        $this->artisan('orchid:admin admin admin@admin.com password');
+            # Login with valid data
+            $this->artisan('orchid:admin admin admin@admin.com password');
 
-        $this->browse(function (Browser $browser) {
             $browser->visit('/admin/login')
                 ->assertSee('Game Log App')
                 ->type('email', 'admin@admin.com')

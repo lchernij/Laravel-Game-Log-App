@@ -5,6 +5,7 @@ namespace Tests\Browser\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\DuskTestCase;
 
 class MainTest extends DuskTestCase
@@ -21,6 +22,8 @@ class MainTest extends DuskTestCase
         $this->adminUser = User::first();
     }
 
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
     public function testOpenIndex(): void
     {
         $baseUrl = config('app.url');

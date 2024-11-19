@@ -5,6 +5,7 @@ namespace Tests\Browser\Tests\Users;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\DuskTestCase;
 
 class CrudTest extends DuskTestCase
@@ -21,6 +22,8 @@ class CrudTest extends DuskTestCase
         $this->adminUser = User::first();
     }
 
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
     public function testBasicCrud(): void
     {
         $this->browse(function (Browser $browser) {
@@ -154,6 +157,8 @@ class CrudTest extends DuskTestCase
         });
     }
 
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
     public function testFilterUser(): void
     {
         $user = User::factory()->create();
@@ -171,6 +176,8 @@ class CrudTest extends DuskTestCase
         });
     }
 
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
     public function testDeleteUserFromIndex(): void
     {
         $user = User::factory()->create();

@@ -5,12 +5,13 @@ namespace Tests\Browser\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Laravel\Dusk\Browser;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\DuskTestCase;
 
 class ProfileTest extends DuskTestCase
 {
     use DatabaseTruncation;
-    
+
     private User $adminUser;
 
     public function setUp(): void
@@ -21,9 +22,12 @@ class ProfileTest extends DuskTestCase
         $this->adminUser = User::first();
     }
 
+    #[Group('Orchid')]
+    #[Group('10-adicionar-testes-de-frontend-com-laravel-dusk')]
     public function testOpenFormAndValidateFields(): void
     {
         $this->browse(function (Browser $browser) {
+            # Form inputs
             $browser->loginAs($this->adminUser)
                 ->visit('/admin/profile')
                 ->assertSee('Minha conta')
@@ -49,6 +53,7 @@ class ProfileTest extends DuskTestCase
                 ->assertSee('Altere sua senha')
             ;
 
+            # Validate empty fields
             $browser->type('user[name]', '')
                 ->type('user[email]', '')
                 ->press('Salvar')
@@ -61,42 +66,26 @@ class ProfileTest extends DuskTestCase
                 ->press('Altere sua senha')
                 ->waitForText('Verifique os dados inseridos.')
             ;
-        });
-    }
 
-    public function testUserCanChangeProfile(): void
-    {
-        $user['name'] = 'Admin Atualizado';
-        $user['email'] = 'admin2@admin2.com.br';
-
-        $this->browse(function (Browser $browser) use ($user) {
-            $browser->loginAs($this->adminUser)
-                ->visit('/admin/profile')
-                ->type('user[name]', $user['name'])
-                ->type('user[email]', $user['email'])
+            # Change user name and email
+            $browser->visit('/admin/profile')
+                ->type('user[name]', 'Admin Atualizado')
+                ->type('user[email]', 'admin2@admin2.com.br')
                 ->press('Salvar')
                 ->waitForText('Perfil atualizado.')
             ;
-        });
 
-        $this->assertDatabaseHas('users', [
-            'name' => $user['name'],
-            'email' => $user['email'],
-        ]);
-    }
+            $this->assertDatabaseHas('users', [
+                'name' => 'Admin Atualizado',
+                'email' => 'admin2@admin2.com.br',
+            ]);
 
-    public function testUserCanChangePassword(): void
-    {
-        $password['old'] = 'password';
-        $password['new'] = 'drowssap';
-        $password['confirm'] = 'drowssap';
-
-        $this->browse(function (Browser $browser) use ($password) {
+            # Change password
             $browser->loginAs($this->adminUser)
                 ->visit('/admin/profile/changePassword')
-                ->type('old_password', $password['old'])
-                ->type('password', $password['new'])
-                ->type('password_confirmation', $password['confirm'])
+                ->type('old_password', 'password')
+                ->type('password', 'drowssap')
+                ->type('password_confirmation', 'drowssap')
                 ->press('Salvar')
                 ->waitForText('Perfil atualizado.')
             ;
