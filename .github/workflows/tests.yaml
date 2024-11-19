@@ -28,6 +28,7 @@ jobs:
           - 5432:5432
 
     env:
+      APP_NAME: Game Log App Test
       APP_URL: "http://127.0.0.1:8000"
       APP_LOCALE: pt_BR
       APP_FALLBACK_LOCALE: pt_BR
