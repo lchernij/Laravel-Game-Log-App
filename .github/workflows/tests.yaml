@@ -15,8 +15,8 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: laravel
+          POSTGRES_PASSWORD: 123123
+          POSTGRES_DB: laravel-game_log_app-test
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -28,6 +28,7 @@ jobs:
           - 5432:5432
 
     env:
+      APP_NAME: Game Log App Test
       APP_URL: "http://127.0.0.1:8000"
       APP_LOCALE: pt_BR
       APP_FALLBACK_LOCALE: pt_BR
@@ -35,9 +36,9 @@ jobs:
       DB_CONNECTION: pgsql
       DB_HOST: localhost
       DB_PORT: 5432
-      DB_DATABASE: laravel
+      DB_DATABASE: laravel-game_log_app-test
       DB_USERNAME: postgres
-      DB_PASSWORD: postgres
+      DB_PASSWORD: 123123
       MAIL_MAILER: log
 
     steps:
@@ -62,3 +63,29 @@ jobs:
 
       - name: Run PHPUnit tests
         run: php artisan test
+
+      - name: Upgrade Chrome Driver
+        run: php artisan dusk:chrome-driver --detect
+
+      - name: Start Chrome Driver
+        run: ./vendor/laravel/dusk/bin/chromedriver-linux --port=9515 &
+
+      - name: Run Laravel Server
+        run: php artisan serve --no-reload &
+
+      - name: Run Dusk Tests
+        run: php artisan dusk
+
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
+
+      - name: Upload Console Logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: console
+          path: tests/Browser/console
