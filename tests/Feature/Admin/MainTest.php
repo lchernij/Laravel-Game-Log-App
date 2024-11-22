@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\User;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 class MainTest extends TestCase
@@ -17,10 +18,11 @@ class MainTest extends TestCase
         $this->actingAs($this->admin);
     }
 
-    public function test_open(): void
+    #[Group('Orchid')]
+    #[Group('3-adicionar-testes-de-api-para-o-orchid')]
+    public function testOpenMainPage(): void
     {
-        $response = $this->get('/admin/main');
-
-        $response->assertStatus(200);
+        $this->get('/admin/main')
+            ->assertStatus(200);
     }
 }
