@@ -204,7 +204,10 @@ return [
         'password'  => 'senha',
         'phone'     => 'telefone',
         'profession' => 'profissão',
-        'role.slug' => 'slug',
+        'role' => [
+            'name' => 'nome',
+            'slug' => 'slug',
+        ],
         'second'    => 'segundo',
         'sex'       => 'sexo',
         'state'     => 'estado',
