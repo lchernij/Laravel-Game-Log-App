@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Models\User;
 use App\Orchid\Layouts\User\ProfilePasswordLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\Impersonation;
-use App\Models\User;
+use Orchid\Fortify\TwoFactorScreenAuthenticatable;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -20,6 +21,8 @@ use Orchid\Support\Facades\Toast;
 
 class UserProfileScreen extends Screen
 {
+    use TwoFactorScreenAuthenticatable;
+
     /**
      * Fetch data to be displayed on the screen.
      *
@@ -67,6 +70,8 @@ class UserProfileScreen extends Screen
                 ->novalidate()
                 ->icon('bs.box-arrow-left')
                 ->route('platform.logout'),
+
+            $this->twoFactorCommandBar(),
         ];
     }
 
@@ -95,6 +100,8 @@ class UserProfileScreen extends Screen
                         ->icon('bs.check-circle')
                         ->method('changePassword')
                 ),
+
+            $this->twoFactorLayout()
         ];
     }
 
@@ -119,7 +126,7 @@ class UserProfileScreen extends Screen
     {
         $guard = config('platform.guard', 'web');
         $request->validate([
-            'old_password' => 'required|current_password:'.$guard,
+            'old_password' => 'required|current_password:' . $guard,
             'password'     => 'required|confirmed|different:old_password',
         ]);
 
