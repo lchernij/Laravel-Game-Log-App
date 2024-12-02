@@ -66,6 +66,7 @@ class User extends Authenticatable
         'id',
         'name',
         'email',
+        'two_factor_secret',
         'updated_at',
         'created_at',
     ];
