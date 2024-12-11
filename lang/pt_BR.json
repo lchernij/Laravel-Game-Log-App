@@ -25,6 +25,7 @@
     "Two factor authentication": "Autenticação de dois fatores",
     "Two-Factor Auth": "Autenticação de dois fatores",
     "Two-factor authentication has been disabled.": "A autenticação de dois fatores foi desativada.",
+    "Two-factor authentication has been enabled.": "A autenticação de dois fatores foi ativada.",
     "Two-Factor Authentication": "Autenticação de dois fatores",
     "Verification code from application": "Código de verificação do aplicativo",
     "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.": "Quando a autenticação de dois fatores é ativada, você será solicitado a inserir um token seguro e aleatório durante a autenticação. Você pode recuperar esse token no aplicativo Google Authenticator do seu telefone."
